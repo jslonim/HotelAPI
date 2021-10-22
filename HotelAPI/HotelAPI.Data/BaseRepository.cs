@@ -1,19 +1,22 @@
-﻿using HotelAPI.Data.Interfaces;
+﻿using HotelAPI.Data.Context;
+using HotelAPI.Data.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace HotelAPI.Data
 {
     public class BaseRepository<T> : IBaseRepository<T> where T : class
     {
-        private readonly DBContext _context = null;
+        private readonly ApplicationDbContext _context = null;
         private DbSet<T> table = null;
 
-        public BaseRepository(DBContext _context)
+        public BaseRepository(ApplicationDbContext context)
         {
-            this._context = _context;
-            table = _context.Set<T>();
+            _context = context;
+            table = context.Set<T>();
         }
         public IEnumerable<T> GetAll()
         {
