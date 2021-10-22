@@ -49,6 +49,10 @@ namespace HotelAPI
                 app.UseDeveloperExceptionPage();
             }
 
+            using (var scope =app.ApplicationServices.CreateScope())
+            using (var context = scope.ServiceProvider.GetService<ApplicationDbContext>())
+                context.Database.Migrate();
+
             app.UseHttpsRedirection();
 
             app.UseRouting();

@@ -11,8 +11,9 @@ namespace HotelAPI.Data.Context
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
-        {
+        {       
         }
+
 
         public DbSet<Reservation> Reservations { get; set; }
     }
