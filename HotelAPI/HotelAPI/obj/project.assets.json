@@ -72,6 +72,29 @@
         "frameworkReferences": [
           "Microsoft.AspNetCore.App"
         ]
+      },
+      "HotelAPI.Business/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v3.1",
+        "dependencies": {
+          "HotelAPI.Data": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/HotelAPI.Business.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/HotelAPI.Business.dll": {}
+        }
+      },
+      "HotelAPI.Data/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v3.1",
+        "compile": {
+          "bin/placeholder/HotelAPI.Data.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/HotelAPI.Data.dll": {}
+        }
       }
     }
   },
@@ -200,10 +223,22 @@
         "swashbuckle.aspnetcore.swaggerui.6.2.3.nupkg.sha512",
         "swashbuckle.aspnetcore.swaggerui.nuspec"
       ]
+    },
+    "HotelAPI.Business/1.0.0": {
+      "type": "project",
+      "path": "../HotelAPI.Business/HotelAPI.Business.csproj",
+      "msbuildProject": "../HotelAPI.Business/HotelAPI.Business.csproj"
+    },
+    "HotelAPI.Data/1.0.0": {
+      "type": "project",
+      "path": "../HotelAPI.Data/HotelAPI.Data.csproj",
+      "msbuildProject": "../HotelAPI.Data/HotelAPI.Data.csproj"
     }
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v3.1": [
+      "HotelAPI.Business >= 1.0.0",
+      "HotelAPI.Data >= 1.0.0",
       "Swashbuckle.AspNetCore >= 6.2.3"
     ]
   },
@@ -233,7 +268,14 @@
       "frameworks": {
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\HotelAPI\\HotelAPI\\HotelAPI.Business\\HotelAPI.Business.csproj": {
+              "projectPath": "C:\\HotelAPI\\HotelAPI\\HotelAPI.Business\\HotelAPI.Business.csproj"
+            },
+            "C:\\HotelAPI\\HotelAPI\\HotelAPI.Data\\HotelAPI.Data.csproj": {
+              "projectPath": "C:\\HotelAPI\\HotelAPI\\HotelAPI.Data\\HotelAPI.Data.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

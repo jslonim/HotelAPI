@@ -1,0 +1,3 @@
+is_global = true
+build_property.RootNamespace = HotelAPI.Business
+build_property.ProjectDir = C:\HotelAPI\HotelAPI\HotelAPI.Business\
