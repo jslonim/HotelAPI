@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using HotelAPI.Data.Entities;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -13,6 +14,6 @@ namespace HotelAPI.Data.Context
         {
         }
 
-        //public DbSet<Student> Students { get; set; }
+        public DbSet<Reservation> Reservations { get; set; }
     }
 }

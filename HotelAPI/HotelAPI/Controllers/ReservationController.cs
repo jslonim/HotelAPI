@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using HotelAPI.Business.Interfaces;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -11,9 +12,10 @@ namespace HotelAPI.Controllers
     [ApiController]
     public class ReservationController : ControllerBase
     {
-        public ReservationController()
+        public IReservationService _reservationService { get; set; }
+        public ReservationController(IReservationService reservationService)
         {
-
+            _reservationService = reservationService;
         }
 
         [HttpGet]

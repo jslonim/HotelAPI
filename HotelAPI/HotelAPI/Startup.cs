@@ -1,4 +1,8 @@
+using HotelAPI.Business;
+using HotelAPI.Business.Interfaces;
+using HotelAPI.Data;
 using HotelAPI.Data.Context;
+using HotelAPI.Data.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -31,6 +35,8 @@ namespace HotelAPI
             services.AddControllers();
 
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("HotelDBConnectionString")));
+            services.AddTransient<IReservationService, ReservationService>();
+            services.AddTransient<IReservationRepository, ReservationRepository>();
             AddSwagger(services);
 
         }
