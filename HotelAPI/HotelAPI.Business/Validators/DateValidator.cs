@@ -19,7 +19,7 @@ namespace HotelAPI.Business.Validators
 
             // Validates for reservation to be within 30 days of the current date, not before nor later.
             if (startDate.Date > DateTime.Today.Date.AddDays(30) || endDate.Date > DateTime.Today.Date.AddDays(30)
-                || startDate.Date < DateTime.Today.Date || endDate.Date < DateTime.Today.Date)
+                || startDate.Date <= DateTime.Today.Date || endDate.Date <= DateTime.Today.Date)
             {
                 throw new DaysInAdvanceException();
             }
