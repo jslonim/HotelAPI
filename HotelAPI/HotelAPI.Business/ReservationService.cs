@@ -1,11 +1,14 @@
 ﻿using AutoMapper;
 using HotelAPI.Business.DTO.Input;
+using HotelAPI.Business.Exceptions;
 using HotelAPI.Business.Interfaces;
+using HotelAPI.Business.Validators;
 using HotelAPI.Data;
 using HotelAPI.Data.Entities;
 using HotelAPI.Data.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace HotelAPI.Business
@@ -22,11 +25,8 @@ namespace HotelAPI.Business
 
         public void CreateReservation(CreateReservationInputDTO reservationDTO) 
         {
-
-            //if ((reservationDTO.EndDate.Date - reservationDTO.StartDate.Date).TotalDays > 3)
-            //{
-
-            //}
+            //Validations regarding dates
+            DateValidator.Validate(reservationDTO.StartDate, reservationDTO.EndDate, _reservationRepository);
 
             Reservation reservation = _mapper.Map<Reservation>(reservationDTO);
 

@@ -10,3 +10,4 @@ C:\HotelAPI\HotelAPI\HotelAPI.Business\obj\Debug\netcoreapp3.1\HotelAPI.Business
 C:\HotelAPI\HotelAPI\HotelAPI.Business\obj\Debug\netcoreapp3.1\HotelAPI.Business.csproj.CoreCompileInputs.cache
 C:\HotelAPI\HotelAPI\HotelAPI.Business\obj\Debug\netcoreapp3.1\HotelAPI.Business.dll
 C:\HotelAPI\HotelAPI\HotelAPI.Business\obj\Debug\netcoreapp3.1\HotelAPI.Business.pdb
+C:\HotelAPI\HotelAPI\HotelAPI.Business\obj\Debug\netcoreapp3.1\HotelAPI.Business.csproj.CopyComplete

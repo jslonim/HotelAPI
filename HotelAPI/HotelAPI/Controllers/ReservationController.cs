@@ -1,4 +1,5 @@
 ﻿using HotelAPI.Business.DTO.Input;
+using HotelAPI.Business.Exceptions;
 using HotelAPI.Business.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -28,17 +29,28 @@ namespace HotelAPI.Controllers
 
         [HttpPost]
         [Route("Create")]
-        public ActionResult Create(CreateReservationInputDTO reservationDTO) 
+        public ActionResult Create(CreateReservationInputDTO reservationDTO)
         {
             try
             {
                 _reservationService.CreateReservation(reservationDTO);
                 return Ok();
             }
+            catch (DayLimitException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (DaysInAdvanceException ex)
+            {
+                return BadRequest(ex.Message); 
+            }
+            catch (ReservedException ex)
+            {
+                return BadRequest(ex.Message); 
+            }
             catch (Exception)
             {
-
-                throw;
+                return StatusCode(500);
             }
 
         }

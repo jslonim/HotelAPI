@@ -10,7 +10,6 @@
 
   <ItemGroup>
     <Folder Include="DTO\Output\" />
-    <Folder Include="Exceptions\" />
   </ItemGroup>
 
   <ItemGroup>

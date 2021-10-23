@@ -12,13 +12,13 @@ namespace HotelAPI.Data.Entities
         [Key, Column(Order = 0)]
         public int Id { get; set; }
 
-        [Column(Order = 1)]
+        [Required,Column(Order = 1)]
         public DateTime StartDate {  get; set; }
 
-        [Column(Order = 2)]
+        [Required, Column(Order = 2)]
         public DateTime EndDate {  get; set; }
 
-        [Column(Order = 3)]
+        [Required, Column(Order = 3)]
         public int CustomerId {  get; set; }
     }
 }
