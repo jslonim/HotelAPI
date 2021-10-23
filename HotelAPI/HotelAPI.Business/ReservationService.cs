@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using HotelAPI.Business.DTO.Input;
+using HotelAPI.Business.DTO.Output;
 using HotelAPI.Business.Exceptions;
 using HotelAPI.Business.Interfaces;
 using HotelAPI.Business.Validators;
@@ -36,10 +37,8 @@ namespace HotelAPI.Business
         }
 
         public void DeleteReservation(int id, int customerId) 
-        {
-            bool reservationExists = _reservationRepository.Find(reservation => reservation.Id == id && reservation.CustomerId == customerId).Any();
-
-            if (reservationExists)
+        {          
+            if (IsReservationAuthorizedForCustomer(id,customerId))
             {
                 _reservationRepository.Delete(id);
                 _reservationRepository.Save();
@@ -55,10 +54,33 @@ namespace HotelAPI.Business
             //Validations regarding dates
             DateValidator.Validate(reservationDTO.StartDate, reservationDTO.EndDate, _reservationRepository, false);
 
-            Reservation reservation = _mapper.Map<Reservation>(reservationDTO);
+            if (IsReservationAuthorizedForCustomer(reservationDTO.Id, reservationDTO.CustomerId))
+            {
+                Reservation reservation = _mapper.Map<Reservation>(reservationDTO);
 
-            _reservationRepository.Update(reservation);
-            _reservationRepository.Save();
+                _reservationRepository.Update(reservation);
+                _reservationRepository.Save();
+            }
+            else
+            {
+                throw new ReservationNotExistentException();
+            }
+
+        }
+
+        public List<GetMyReservationsOutputDTO> GetMyReservations(int customerId) 
+        {
+            //Get all reservations for customer and that are not in the past
+            List<Reservation> reservationList = _reservationRepository.Find(reservation => reservation.CustomerId == customerId && reservation.StartDate.Date >= DateTime.Today.Date).ToList();
+
+            List<GetMyReservationsOutputDTO> reservationListDTO = _mapper.Map<List<GetMyReservationsOutputDTO>>(reservationList);
+
+            return reservationListDTO;
+        }
+
+        private bool IsReservationAuthorizedForCustomer(int id,int customerId) 
+        {
+            return _reservationRepository.Find(reservation => reservation.Id == id && reservation.CustomerId == customerId).Any();
         }
     }
 }

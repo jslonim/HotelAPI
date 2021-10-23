@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using HotelAPI.Business.DTO.Input;
+using HotelAPI.Business.DTO.Output;
 using HotelAPI.Data.Entities;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,7 @@ namespace HotelAPI.Business.Mappings
         {
             CreateMap<CreateReservationInputDTO, Reservation>();
             CreateMap<UpdateReservationInputDTO, Reservation>();
+            CreateMap<GetMyReservationsOutputDTO, Reservation>().ReverseMap();
         }
     }
 }

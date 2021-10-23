@@ -1,4 +1,5 @@
 ﻿using HotelAPI.Business.DTO.Input;
+using HotelAPI.Business.DTO.Output;
 using HotelAPI.Business.Exceptions;
 using HotelAPI.Business.Interfaces;
 using Microsoft.AspNetCore.Http;
@@ -29,9 +30,17 @@ namespace HotelAPI.Controllers
 
         [HttpGet]
         [Route("GetMyReservations")]
-        public ActionResult GetMyReservations()
+        public ActionResult GetMyReservations(int customerId)
         {
-            return Ok("Test");
+            try
+            {
+                List<GetMyReservationsOutputDTO> reservationList = _reservationService.GetMyReservations(customerId);
+                return Ok(reservationList);
+            }
+            catch (Exception)
+            {
+                return StatusCode(500);
+            }
         }
 
         [HttpPost]
@@ -79,6 +88,10 @@ namespace HotelAPI.Controllers
             {
                 return BadRequest(ex.Message);
             }
+            catch (ReservationNotExistentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
             catch (Exception)
             {
                 return StatusCode(500);
@@ -87,12 +100,12 @@ namespace HotelAPI.Controllers
 
         [HttpDelete]
         [Route("Delete")]
-        public ActionResult Delete(int id,int customerId)
+        public ActionResult Delete(int id, int customerId)
         {
             try
             {
                 // Customer id added for restricting customers to delete reservations that don't belong to them
-                _reservationService.DeleteReservation(id,customerId);
+                _reservationService.DeleteReservation(id, customerId);
                 return Ok();
             }
             catch (ReservationNotExistentException ex)
