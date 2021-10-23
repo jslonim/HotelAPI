@@ -9,7 +9,7 @@ namespace HotelAPI.Business.Interfaces
     {
         void CreateReservation(CreateReservationInputDTO reservationDTO);
 
-        void DeleteReservation(int id);
+        void DeleteReservation(DeleteReservationInputDTO reservationDTO);
 
         void UpdateReservation(UpdateReservationInputDTO reservationDTO);
     }

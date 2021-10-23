@@ -35,13 +35,13 @@ namespace HotelAPI.Business
             _reservationRepository.Save();
         }
 
-        public void DeleteReservation(int id) 
+        public void DeleteReservation(DeleteReservationInputDTO reservationDTO) 
         {
-            bool reservationExists = _reservationRepository.Find(reservation => reservation.Id == id).Any();
+            bool reservationExists = _reservationRepository.Find(reservation => reservation.Id == reservationDTO.id && reservation.CustomerId == reservationDTO.customerId).Any();
 
             if (reservationExists)
             {
-                _reservationRepository.Delete(id);
+                _reservationRepository.Delete(reservationDTO.id);
                 _reservationRepository.Save();
             }
             else
