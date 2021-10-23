@@ -1,4 +1,5 @@
-﻿using HotelAPI.Business.Interfaces;
+﻿using HotelAPI.Business.DTO.Input;
+using HotelAPI.Business.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -20,28 +21,38 @@ namespace HotelAPI.Controllers
 
         [HttpGet]
         [Route("CheckAvailability")]
-        public async Task<ActionResult> CheckRoomAvailability()
+        public ActionResult CheckRoomAvailability()
         {
             return Ok("Test");
         }
 
         [HttpPost]
         [Route("Create")]
-        public async Task<ActionResult> Create() 
+        public ActionResult Create(CreateReservationInputDTO reservationDTO) 
         {
-            return Ok("Test");
+            try
+            {
+                _reservationService.CreateReservation(reservationDTO);
+                return Ok();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
         }
 
         [HttpPut]
         [Route("Update")]
-        public async Task<ActionResult> Update()
+        public ActionResult Update()
         {
             return Ok("Test");
         }
 
         [HttpDelete]
         [Route("Delete")]
-        public async Task<ActionResult> Delete()
+        public ActionResult Delete()
         {
             return Ok("Test");
         }

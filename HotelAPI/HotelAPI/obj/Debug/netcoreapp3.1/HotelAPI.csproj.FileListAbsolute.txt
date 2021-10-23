@@ -89,4 +89,5 @@ C:\HotelAPI\HotelAPI\HotelAPI\bin\Debug\netcoreapp3.1\HotelAPI.Business.dll
 C:\HotelAPI\HotelAPI\HotelAPI\bin\Debug\netcoreapp3.1\HotelAPI.Data.dll
 C:\HotelAPI\HotelAPI\HotelAPI\bin\Debug\netcoreapp3.1\HotelAPI.Business.pdb
 C:\HotelAPI\HotelAPI\HotelAPI\bin\Debug\netcoreapp3.1\HotelAPI.Data.pdb
-C:\HotelAPI\HotelAPI\HotelAPI\obj\Debug\netcoreapp3.1\HotelAPI.csproj.CopyComplete
+C:\HotelAPI\HotelAPI\HotelAPI\bin\Debug\netcoreapp3.1\AutoMapper.dll
+C:\HotelAPI\HotelAPI\HotelAPI\bin\Debug\netcoreapp3.1\AutoMapper.Extensions.Microsoft.DependencyInjection.dll

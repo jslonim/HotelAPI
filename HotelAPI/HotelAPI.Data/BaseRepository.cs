@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 
 namespace HotelAPI.Data
@@ -26,14 +27,17 @@ namespace HotelAPI.Data
         {
             return table.Find(id);
         }
-        public void Insert(T obj)
+        public IEnumerable<T> Find(Expression<Func<T, bool>> predicate)
         {
-            table.Add(obj);
+            return table.Where(predicate);
+        }
+        public async void Insert(T obj)
+        {
+            await table.AddAsync(obj);
         }
         public void Update(T obj)
         {
-            table.Attach(obj);
-            _context.Entry(obj).State = EntityState.Modified;
+            table.Update(obj);
         }
         public void Delete(object id)
         {

@@ -37,6 +37,8 @@ namespace HotelAPI
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("HotelDBConnectionString")));
             services.AddTransient<IReservationService, ReservationService>();
             services.AddTransient<IReservationRepository, ReservationRepository>();
+
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             AddSwagger(services);
 
         }

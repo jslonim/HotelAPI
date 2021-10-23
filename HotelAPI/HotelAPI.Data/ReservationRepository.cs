@@ -14,5 +14,6 @@ namespace HotelAPI.Data
         {
             context = _context;
         }
+
     }
 }

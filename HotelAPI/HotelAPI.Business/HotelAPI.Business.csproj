@@ -8,4 +8,13 @@
     <ProjectReference Include="..\HotelAPI.Data\HotelAPI.Data.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="DTO\Output\" />
+    <Folder Include="Exceptions\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
+  </ItemGroup>
+
 </Project>
