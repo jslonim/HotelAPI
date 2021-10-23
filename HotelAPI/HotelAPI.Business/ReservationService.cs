@@ -16,7 +16,7 @@ namespace HotelAPI.Business
 {
     public class ReservationService : IReservationService
     {
-        public readonly IReservationRepository _reservationRepository;
+        private readonly IReservationRepository _reservationRepository;
         private readonly IMapper _mapper;
         public ReservationService(IReservationRepository reservationRepository, IMapper mapper)
         {
@@ -65,6 +65,7 @@ namespace HotelAPI.Business
 
             if (IsReservationAuthorizedForCustomer(reservationDTO.Id, reservationDTO.CustomerId))
             {
+                //Gets the reservation and updates the properties 
                 Reservation reservation = _reservationRepository.GetById(reservationDTO.Id);
                 _mapper.Map(reservationDTO, reservation);
 

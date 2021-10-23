@@ -6,7 +6,7 @@ namespace HotelAPI.Business.Exceptions
 {
     public class DaysInAdvanceException : Exception
     {
-        public DaysInAdvanceException() : base("Reservations must be done within 30 days of the selected date")
+        public DaysInAdvanceException() : base("Reservations must be done within 30 days of the current date")
         {
 
         }

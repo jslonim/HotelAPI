@@ -27,7 +27,7 @@ namespace HotelAPI.Business.Validators
             if (isCreation)
             {
                 //Validate if already reserved
-                bool isAlreadyReserved = reservationRepository.Find(reservation => startDate <= reservation.EndDate && reservation.StartDate <= endDate).Any();
+                bool isAlreadyReserved = reservationRepository.Find(reservation => startDate.Date <= reservation.EndDate.Date && reservation.StartDate.Date <= endDate.Date).Any();
 
                 if (isAlreadyReserved)
                 {

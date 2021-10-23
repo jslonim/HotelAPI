@@ -15,7 +15,7 @@ namespace HotelAPI.Controllers
     [ApiController]
     public class ReservationController : ControllerBase
     {
-        public IReservationService _reservationService { get; set; }
+        private readonly IReservationService _reservationService;
         public ReservationController(IReservationService reservationService)
         {
             _reservationService = reservationService;

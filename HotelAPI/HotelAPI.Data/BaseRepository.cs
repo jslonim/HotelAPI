@@ -12,7 +12,7 @@ namespace HotelAPI.Data
     public class BaseRepository<T> : IBaseRepository<T> where T : class
     {
         private readonly ApplicationDbContext _context = null;
-        private DbSet<T> table = null;
+        private readonly DbSet<T> table = null;
 
         public BaseRepository(ApplicationDbContext context)
         {
