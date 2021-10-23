@@ -25,7 +25,15 @@ namespace HotelAPI.Controllers
         [Route("CheckAvailability")]
         public ActionResult CheckRoomAvailability()
         {
-            return Ok("Test");
+            try
+            {
+                List<CheckRoomAvailabilityOutputDTO> reservationList = _reservationService.CheckRoomAvailability();
+                return Ok(reservationList);
+            }
+            catch (Exception)
+            {
+                return StatusCode(500);
+            }
         }
 
         [HttpGet]

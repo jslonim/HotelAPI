@@ -21,7 +21,7 @@ namespace HotelAPI.Data
         }
         public IEnumerable<T> GetAll()
         {
-            return table.ToList();
+            return table.AsNoTracking().ToList();
         }
         public T GetById(object id)
         {
@@ -29,7 +29,7 @@ namespace HotelAPI.Data
         }
         public IEnumerable<T> Find(Expression<Func<T, bool>> predicate)
         {
-            return table.Where(predicate);
+            return table.Where(predicate).AsNoTracking();
         }
         public async void Insert(T obj)
         {

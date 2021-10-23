@@ -15,6 +15,7 @@ namespace HotelAPI.Business.Mappings
             CreateMap<CreateReservationInputDTO, Reservation>();
             CreateMap<UpdateReservationInputDTO, Reservation>();
             CreateMap<GetMyReservationsOutputDTO, Reservation>().ReverseMap();
+            CreateMap<CheckRoomAvailabilityOutputDTO, Reservation>().ReverseMap();
         }
     }
 }

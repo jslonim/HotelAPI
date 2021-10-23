@@ -24,6 +24,15 @@ namespace HotelAPI.Business
             _mapper = mapper;   
         }
 
+        public List<CheckRoomAvailabilityOutputDTO> CheckRoomAvailability() 
+        {
+            List<Reservation> reservationList = _reservationRepository.Find(reservation => reservation.StartDate.Date >= DateTime.Today.Date).ToList();
+
+            List<CheckRoomAvailabilityOutputDTO> reservationListDTO = _mapper.Map<List<CheckRoomAvailabilityOutputDTO>>(reservationList);
+
+            return reservationListDTO;
+        }
+
         public void CreateReservation(CreateReservationInputDTO reservationDTO) 
         {
             //Validations regarding dates
@@ -56,7 +65,8 @@ namespace HotelAPI.Business
 
             if (IsReservationAuthorizedForCustomer(reservationDTO.Id, reservationDTO.CustomerId))
             {
-                Reservation reservation = _mapper.Map<Reservation>(reservationDTO);
+                Reservation reservation = _reservationRepository.GetById(reservationDTO.Id);
+                _mapper.Map(reservationDTO, reservation);
 
                 _reservationRepository.Update(reservation);
                 _reservationRepository.Save();

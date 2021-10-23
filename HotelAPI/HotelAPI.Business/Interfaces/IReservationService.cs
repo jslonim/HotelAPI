@@ -8,6 +8,7 @@ namespace HotelAPI.Business.Interfaces
 {
     public interface IReservationService
     {
+        List<CheckRoomAvailabilityOutputDTO> CheckRoomAvailability();
         void CreateReservation(CreateReservationInputDTO reservationDTO);
 
         void DeleteReservation(int id, int customerId);
