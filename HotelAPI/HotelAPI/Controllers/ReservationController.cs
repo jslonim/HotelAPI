@@ -87,11 +87,12 @@ namespace HotelAPI.Controllers
 
         [HttpDelete]
         [Route("Delete")]
-        public ActionResult Delete(DeleteReservationInputDTO reservationDTO)
+        public ActionResult Delete(int id,int customerId)
         {
             try
             {
-                _reservationService.DeleteReservation(reservationDTO);
+                // Customer id added for restricting customers to delete reservations that don't belong to them
+                _reservationService.DeleteReservation(id,customerId);
                 return Ok();
             }
             catch (ReservationNotExistentException ex)
