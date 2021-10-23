@@ -9,9 +9,6 @@ namespace HotelAPI.Business.DTO.Output
 
         public int id { get; set; }
         public DateTime StartDate { get; set; }
-
         public DateTime EndDate { get; set; }
-
-        public string Status { get; set; } = "Reserved";
     }
 }

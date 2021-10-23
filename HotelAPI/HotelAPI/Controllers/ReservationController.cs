@@ -22,11 +22,12 @@ namespace HotelAPI.Controllers
         }
 
         [HttpGet]
-        [Route("CheckAvailability")]
-        public ActionResult CheckRoomAvailability()
+        [Route("GetAll")]
+        public ActionResult GetAll()
         {
             try
             {
+                //Gets all reservation from today and forward
                 List<CheckRoomAvailabilityOutputDTO> reservationList = _reservationService.CheckRoomAvailability();
                 return Ok(reservationList);
             }
