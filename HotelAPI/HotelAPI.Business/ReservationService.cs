@@ -45,9 +45,9 @@ namespace HotelAPI.Business
             _reservationRepository.Save();
         }
 
-        public void DeleteReservation(int id, int customerId) 
+        public void DeleteReservation(int id) 
         {          
-            if (IsReservationAuthorizedForCustomer(id,customerId))
+            if (IsReservationAuthorizedForCustomer(id))
             {
                 _reservationRepository.Delete(id);
                 _reservationRepository.Save();
@@ -63,7 +63,7 @@ namespace HotelAPI.Business
             //Validations regarding dates
             DateValidator.Validate(reservationDTO.StartDate, reservationDTO.EndDate, _reservationRepository, false);
 
-            if (IsReservationAuthorizedForCustomer(reservationDTO.Id, reservationDTO.CustomerId))
+            if (IsReservationAuthorizedForCustomer(reservationDTO.Id))
             {
                 //Gets the reservation and updates the properties 
                 Reservation reservation = _reservationRepository.GetById(reservationDTO.Id);
@@ -78,20 +78,9 @@ namespace HotelAPI.Business
             }
 
         }
-
-        public List<GetMyReservationsOutputDTO> GetMyReservations(int customerId) 
+        private bool IsReservationAuthorizedForCustomer(int id) 
         {
-            //Get all reservations for customer and that are not in the past
-            List<Reservation> reservationList = _reservationRepository.Find(reservation => reservation.CustomerId == customerId && reservation.StartDate.Date >= DateTime.Today.Date).ToList();
-
-            List<GetMyReservationsOutputDTO> reservationListDTO = _mapper.Map<List<GetMyReservationsOutputDTO>>(reservationList);
-
-            return reservationListDTO;
-        }
-
-        private bool IsReservationAuthorizedForCustomer(int id,int customerId) 
-        {
-            return _reservationRepository.Find(reservation => reservation.Id == id && reservation.CustomerId == customerId).Any();
+            return _reservationRepository.Find(reservation => reservation.Id == id).Any();
         }
     }
 }

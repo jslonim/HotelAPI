@@ -31,9 +31,9 @@ namespace HotelAPI.Data
         {
             return table.Where(predicate).AsNoTracking();
         }
-        public async void Insert(T obj)
+        public void Insert(T obj)
         {
-            await table.AddAsync(obj);
+            table.Add(obj);
         }
         public void Update(T obj)
         {

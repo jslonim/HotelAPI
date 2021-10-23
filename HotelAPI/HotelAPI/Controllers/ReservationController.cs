@@ -36,21 +36,6 @@ namespace HotelAPI.Controllers
             }
         }
 
-        [HttpGet]
-        [Route("GetMyReservations")]
-        public ActionResult GetMyReservations(int customerId)
-        {
-            try
-            {
-                List<GetMyReservationsOutputDTO> reservationList = _reservationService.GetMyReservations(customerId);
-                return Ok(reservationList);
-            }
-            catch (Exception)
-            {
-                return StatusCode(500);
-            }
-        }
-
         [HttpPost]
         [Route("Create")]
         public ActionResult Create(CreateReservationInputDTO reservationDTO)
@@ -108,12 +93,11 @@ namespace HotelAPI.Controllers
 
         [HttpDelete]
         [Route("Delete")]
-        public ActionResult Delete(int id, int customerId)
+        public ActionResult Delete(int id)
         {
             try
             {
-                // Customer id added for restricting customers to delete reservations that don't belong to them
-                _reservationService.DeleteReservation(id, customerId);
+                _reservationService.DeleteReservation(id);
                 return Ok();
             }
             catch (ReservationNotExistentException ex)

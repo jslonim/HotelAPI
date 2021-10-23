@@ -11,10 +11,8 @@ namespace HotelAPI.Business.Interfaces
         List<CheckRoomAvailabilityOutputDTO> CheckRoomAvailability();
         void CreateReservation(CreateReservationInputDTO reservationDTO);
 
-        void DeleteReservation(int id, int customerId);
+        void DeleteReservation(int id);
 
         void UpdateReservation(UpdateReservationInputDTO reservationDTO);
-
-        List<GetMyReservationsOutputDTO> GetMyReservations(int customerId);
     }
 }

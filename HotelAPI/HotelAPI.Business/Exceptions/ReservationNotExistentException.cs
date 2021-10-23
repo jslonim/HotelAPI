@@ -7,7 +7,7 @@ namespace HotelAPI.Business.Exceptions
     public class ReservationNotExistentException : Exception
     {
 
-        public ReservationNotExistentException() : base("Reservation does not exist or belongs to another customer")
+        public ReservationNotExistentException() : base("Reservation does not exist")
         {
 
         }
