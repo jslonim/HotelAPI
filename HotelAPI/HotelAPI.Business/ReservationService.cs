@@ -49,5 +49,16 @@ namespace HotelAPI.Business
                 throw new ReservationNotExistentException();
             }
         }
+
+        public void UpdateReservation(UpdateReservationInputDTO reservationDTO) 
+        {
+            //Validations regarding dates
+            DateValidator.Validate(reservationDTO.StartDate, reservationDTO.EndDate, _reservationRepository, false);
+
+            Reservation reservation = _mapper.Map<Reservation>(reservationDTO);
+
+            _reservationRepository.Update(reservation);
+            _reservationRepository.Save();
+        }
     }
 }

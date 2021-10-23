@@ -49,11 +49,11 @@ namespace HotelAPI.Controllers
             }
             catch (DaysInAdvanceException ex)
             {
-                return BadRequest(ex.Message); 
+                return BadRequest(ex.Message);
             }
             catch (ReservedException ex)
             {
-                return BadRequest(ex.Message); 
+                return BadRequest(ex.Message);
             }
             catch (Exception)
             {
@@ -64,9 +64,25 @@ namespace HotelAPI.Controllers
 
         [HttpPut]
         [Route("Update")]
-        public ActionResult Update()
+        public ActionResult Update(UpdateReservationInputDTO reservationDTO)
         {
-            return Ok("Test");
+            try
+            {
+                _reservationService.UpdateReservation(reservationDTO);
+                return Ok();
+            }
+            catch (DayLimitException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (DaysInAdvanceException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception)
+            {
+                return StatusCode(500);
+            }
         }
 
         [HttpDelete]
@@ -78,7 +94,7 @@ namespace HotelAPI.Controllers
                 _reservationService.DeleteReservation(id);
                 return Ok();
             }
-            catch (ReservationNotExistentException ex) 
+            catch (ReservationNotExistentException ex)
             {
                 return BadRequest(ex.Message);
             }

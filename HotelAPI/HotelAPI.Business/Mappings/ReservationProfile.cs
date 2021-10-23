@@ -12,6 +12,7 @@ namespace HotelAPI.Business.Mappings
         public ReservationProfile()
         {
             CreateMap<CreateReservationInputDTO, Reservation>();
+            CreateMap<UpdateReservationInputDTO, Reservation>();
         }
     }
 }
