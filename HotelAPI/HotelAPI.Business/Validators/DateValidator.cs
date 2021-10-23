@@ -9,7 +9,7 @@ namespace HotelAPI.Business.Validators
 {
     public static class DateValidator
     {
-        public static void Validate(DateTime startDate, DateTime endDate, IReservationRepository reservationRepository) 
+        public static void Validate(DateTime startDate, DateTime endDate, IReservationRepository reservationRepository,bool isCreation) 
         {
             // Validates for the reservation not being more than 3 days
             if (endDate.Date.Subtract(startDate.Date).Days > 3)
@@ -24,13 +24,16 @@ namespace HotelAPI.Business.Validators
                 throw new DaysInAdvanceException();
             }
 
-            //Validate if already reserved
-            bool isAlreadyReserved = reservationRepository.Find(reservation => startDate <= reservation.EndDate && reservation.StartDate <= endDate).Any();
-
-            if (isAlreadyReserved) 
+            if (isCreation)
             {
-                throw new ReservedException(); 
-            }           
+                //Validate if already reserved
+                bool isAlreadyReserved = reservationRepository.Find(reservation => startDate <= reservation.EndDate && reservation.StartDate <= endDate).Any();
+
+                if (isAlreadyReserved)
+                {
+                    throw new ReservedException();
+                }
+            }       
         }
     }
 }

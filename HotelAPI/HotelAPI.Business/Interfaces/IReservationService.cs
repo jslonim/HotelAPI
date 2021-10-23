@@ -8,5 +8,7 @@ namespace HotelAPI.Business.Interfaces
     public interface IReservationService
     {
         void CreateReservation(CreateReservationInputDTO reservationDTO);
+
+        void DeleteReservation(int id);
     }
 }

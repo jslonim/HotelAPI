@@ -27,6 +27,13 @@ namespace HotelAPI.Controllers
             return Ok("Test");
         }
 
+        [HttpGet]
+        [Route("GetMyReservations")]
+        public ActionResult GetMyReservations()
+        {
+            return Ok("Test");
+        }
+
         [HttpPost]
         [Route("Create")]
         public ActionResult Create(CreateReservationInputDTO reservationDTO)
@@ -64,9 +71,21 @@ namespace HotelAPI.Controllers
 
         [HttpDelete]
         [Route("Delete")]
-        public ActionResult Delete()
+        public ActionResult Delete(int id)
         {
-            return Ok("Test");
+            try
+            {
+                _reservationService.DeleteReservation(id);
+                return Ok();
+            }
+            catch (ReservationNotExistentException ex) 
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception)
+            {
+                return StatusCode(500);
+            }
         }
     }
 }

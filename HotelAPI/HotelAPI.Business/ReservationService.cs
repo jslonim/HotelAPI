@@ -26,13 +26,28 @@ namespace HotelAPI.Business
         public void CreateReservation(CreateReservationInputDTO reservationDTO) 
         {
             //Validations regarding dates
-            DateValidator.Validate(reservationDTO.StartDate, reservationDTO.EndDate, _reservationRepository);
+            DateValidator.Validate(reservationDTO.StartDate, reservationDTO.EndDate, _reservationRepository,true);
 
             Reservation reservation = _mapper.Map<Reservation>(reservationDTO);
 
             _reservationRepository.Insert(reservation);
 
             _reservationRepository.Save();
+        }
+
+        public void DeleteReservation(int id) 
+        {
+            bool reservationExists = _reservationRepository.Find(reservation => reservation.Id == id).Any();
+
+            if (reservationExists)
+            {
+                _reservationRepository.Delete(id);
+                _reservationRepository.Save();
+            }
+            else
+            {
+                throw new ReservationNotExistentException();
+            }
         }
     }
 }
