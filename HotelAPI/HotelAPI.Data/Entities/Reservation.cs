@@ -17,5 +17,9 @@ namespace HotelAPI.Data.Entities
 
         [Required, Column(Order = 2)]
         public DateTime EndDate {  get; set; }
+
+        [Required, Column(Order = 3)]
+        [MaxLength(50)]
+        public string CustomerFullName { get; set; }
     }
 }

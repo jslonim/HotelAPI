@@ -51,7 +51,7 @@ namespace HotelAPI.Controllers
                 return BadRequest(ex.Message);
             }
             catch (Exception)
-            {
+            {         
                 return StatusCode(500);
             }
 
