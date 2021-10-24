@@ -46,15 +46,7 @@ namespace HotelAPI.Controllers
                 _reservationService.CreateReservation(reservationDTO);
                 return Ok();
             }
-            catch (DayLimitException ex)
-            {
-                return BadRequest(ex.Message);
-            }
-            catch (DaysInAdvanceException ex)
-            {
-                return BadRequest(ex.Message);
-            }
-            catch (ReservedException ex)
+            catch (ValidationException ex)
             {
                 return BadRequest(ex.Message);
             }
@@ -74,15 +66,7 @@ namespace HotelAPI.Controllers
                 _reservationService.UpdateReservation(reservationDTO);
                 return Ok();
             }
-            catch (DayLimitException ex)
-            {
-                return BadRequest(ex.Message);
-            }
-            catch (DaysInAdvanceException ex)
-            {
-                return BadRequest(ex.Message);
-            }
-            catch (ReservationNotExistentException ex)
+            catch (ValidationException ex)
             {
                 return BadRequest(ex.Message);
             }
@@ -101,7 +85,7 @@ namespace HotelAPI.Controllers
                 _reservationService.DeleteReservation(id);
                 return Ok();
             }
-            catch (ReservationNotExistentException ex)
+            catch (ValidationException ex)
             {
                 return BadRequest(ex.Message);
             }

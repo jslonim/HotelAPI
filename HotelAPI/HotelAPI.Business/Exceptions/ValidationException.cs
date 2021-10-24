@@ -4,9 +4,9 @@ using System.Text;
 
 namespace HotelAPI.Business.Exceptions
 {
-    public class DayLimitException : Exception
+    public class ValidationException : Exception
     {
-        public DayLimitException() : base("Reservations must be for 3 days or less")
+        public ValidationException(string message) : base(message)
         {
 
         }

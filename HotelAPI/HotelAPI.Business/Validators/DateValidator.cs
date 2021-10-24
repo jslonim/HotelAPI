@@ -14,14 +14,14 @@ namespace HotelAPI.Business.Validators
             // Validates for the reservation not being more than 3 days
             if (endDate.Date.Subtract(startDate.Date).Days > 3)
             {
-                throw new DayLimitException();
+                throw new ValidationException("Reservations must be for 3 days or less");
             }
 
             // Validates for reservation to be within 30 days of the current date, not before nor later.
             if (startDate.Date > DateTime.Today.Date.AddDays(30) || endDate.Date > DateTime.Today.Date.AddDays(30)
                 || startDate.Date <= DateTime.Today.Date || endDate.Date <= DateTime.Today.Date)
             {
-                throw new DaysInAdvanceException();
+                throw new ValidationException("Reservations must be done within 30 days after today");
             }
 
             if (isCreation)
@@ -31,7 +31,7 @@ namespace HotelAPI.Business.Validators
 
                 if (isAlreadyReserved)
                 {
-                    throw new ReservedException();
+                    throw new ValidationException("The room is already reserved for a day in the date range");
                 }
             }       
         }

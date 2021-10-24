@@ -47,14 +47,14 @@ namespace HotelAPI.Business
 
         public void DeleteReservation(int id) 
         {          
-            if (IsReservationAuthorizedForCustomer(id))
+            if (ReservationExists(id))
             {
                 _reservationRepository.Delete(id);
                 _reservationRepository.Save();
             }
             else
             {
-                throw new ReservationNotExistentException();
+                throw new ValidationException("Reservation does not exist");
             }
         }
 
@@ -63,7 +63,7 @@ namespace HotelAPI.Business
             //Validations regarding dates
             DateValidator.Validate(reservationDTO.StartDate, reservationDTO.EndDate, _reservationRepository, false);
 
-            if (IsReservationAuthorizedForCustomer(reservationDTO.Id))
+            if (ReservationExists(reservationDTO.Id))
             {
                 //Gets the reservation and updates the properties 
                 Reservation reservation = _reservationRepository.GetById(reservationDTO.Id);
@@ -74,11 +74,11 @@ namespace HotelAPI.Business
             }
             else
             {
-                throw new ReservationNotExistentException();
+                throw new ValidationException("Reservation does not exist");
             }
 
         }
-        private bool IsReservationAuthorizedForCustomer(int id) 
+        private bool ReservationExists(int id) 
         {
             return _reservationRepository.Find(reservation => reservation.Id == id).Any();
         }
