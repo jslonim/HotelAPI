@@ -26,7 +26,7 @@ After that if the connection string is correct, the DB will be generated for you
 ## Backend API Endpoints
 
 ### (GET) api/Resvation/GetAll
-Gets all reservations for the hotel in order to look for availability
+Gets all reservations for the hotel in order to look for availability (Excluding ones in the past)
 
 ### (POST) api/Resvation/Create
 Creates a Reservation
