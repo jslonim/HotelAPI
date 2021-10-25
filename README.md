@@ -60,7 +60,7 @@ The Database only has 1 table which is for reservation with the following column
 
 ## Important
 
-StartDate and EndDate will take the time as inputs with the date but all the validation will use only the date, making the reservation valid from 0:00:00 to 23:59:59 as requested, otherwise to change this we could use a validation to accept only those times or use a tring with a specific format for the date that would be needed to be parsed later on.
+StartDate and EndDate will take the time as inputs with the date but all the validation will use only the date, making the reservation valid from 0:00:00 to 23:59:59 as requested, otherwise to change this we could use a validation to accept only those times or use a string with a specific format for the date that would be needed to be parsed later on.
 
 ## Tech stack
 
