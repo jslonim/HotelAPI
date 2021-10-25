@@ -31,7 +31,7 @@ Gets all reservations for the hotel in order to look for availability
 ### (POST) api/Resvation/Create
 Creates a Reservation
 
-### (UPDATE) api/Resvation/Update
+### (PUT) api/Resvation/Update
 Updates a Reservation
 
 ### (DELETE) api/Resvation/Delete
