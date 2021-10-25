@@ -46,10 +46,11 @@ namespace HotelAPI.Business
         }
 
         public void DeleteReservation(int id) 
-        {          
-            if (ReservationExists(id))
+        {
+            Reservation reservation = _reservationRepository.GetById(id);
+            if (reservation != null)
             {
-                _reservationRepository.Delete(id);
+                _reservationRepository.Delete(reservation.Id);
                 _reservationRepository.Save();
             }
             else
@@ -63,12 +64,10 @@ namespace HotelAPI.Business
             //Validations regarding dates
             DateValidator.Validate(reservationDTO.StartDate, reservationDTO.EndDate, _reservationRepository, false);
 
-            if (ReservationExists(reservationDTO.Id))
-            {
-                //Gets the reservation and updates the properties 
-                Reservation reservation = _reservationRepository.GetById(reservationDTO.Id);
+            Reservation reservation = _reservationRepository.GetById(reservationDTO.Id);
+            if (reservation != null)
+            {            
                 _mapper.Map(reservationDTO, reservation);
-
                 _reservationRepository.Update(reservation);
                 _reservationRepository.Save();
             }
@@ -77,10 +76,6 @@ namespace HotelAPI.Business
                 throw new ValidationException("Reservation does not exist");
             }
 
-        }
-        private bool ReservationExists(int id) 
-        {
-            return _reservationRepository.Find(reservation => reservation.Id == id).Any();
         }
     }
 }

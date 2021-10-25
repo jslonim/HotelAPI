@@ -27,7 +27,6 @@ namespace HotelAPI.Controllers
         {
             try
             {
-                //Gets all reservation from today and forward
                 List<CheckRoomAvailabilityOutputDTO> reservationList = _reservationService.CheckRoomAvailability();
                 return Ok(reservationList);
             }
@@ -54,7 +53,6 @@ namespace HotelAPI.Controllers
             {         
                 return StatusCode(500);
             }
-
         }
 
         [HttpPut]

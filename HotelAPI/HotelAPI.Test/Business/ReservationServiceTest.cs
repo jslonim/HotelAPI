@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using HotelAPI.Business;
+using HotelAPI.Business.DTO.Input;
 using HotelAPI.Business.DTO.Output;
+using HotelAPI.Business.Exceptions;
 using HotelAPI.Business.Interfaces;
 using HotelAPI.Data.Entities;
 using HotelAPI.Data.Interfaces;
@@ -58,20 +60,212 @@ namespace HotelAPI.Test.Business
             Assert.AreEqual(result[1].EndDate, DateTime.Today.AddDays(5));
         }
 
-
         [Test]
         public void DeleteReservation_Id_ExecutesDeleteReservation()
         {
-            List<Reservation> reservList = new List<Reservation>();
             Reservation reserv = new Reservation();
-            reservList.Add(reserv);
 
-            _reservationRepository.Setup(m => m.Find(It.IsAny<Expression<Func<Reservation, bool>>>())).Returns(reservList);
+            _reservationRepository.Setup(m => m.GetById(It.IsAny<int>())).Returns(reserv);
             _reservationRepository.Setup(m => m.Delete(It.IsAny<int>()));
 
             _reservationService.DeleteReservation(1);
 
-            _reservationRepository.Verify(x => x.Delete(It.IsAny<int>()), Times.AtLeastOnce());
+            _reservationRepository.Verify(x => x.Delete(It.IsAny<object>()), Times.Once());
         }
+
+        [Test]
+        public void DeleteReservation_Id_ThrowsExeptionReservationDoesNotExist()
+        {
+            List<Reservation> reservList = new List<Reservation>();
+
+            _reservationRepository.Setup(m => m.Find(It.IsAny<Expression<Func<Reservation, bool>>>())).Returns(reservList);
+            _reservationRepository.Setup(m => m.Delete(It.IsAny<int>()));
+
+            Assert.Throws<ValidationException>(() => _reservationService.DeleteReservation(1));
+        }
+
+        [Test]
+        public void CreateReservation_CreateReservationInputDTO_CreatesReservation()
+        {
+            CreateReservationInputDTO reservationDTO = new CreateReservationInputDTO()
+            {
+                StartDate = DateTime.Today.AddDays(1),
+                EndDate = DateTime.Today.AddDays(2),
+                CustomerFullName = "Julian Slonim"
+            };
+
+            Reservation reservation = new Reservation()
+            {
+                StartDate = DateTime.Today.AddDays(1),
+                EndDate = DateTime.Today.AddDays(2),
+                CustomerFullName = "Julian Slonim"
+            };
+
+            _reservationRepository.Setup(m => m.Insert(It.IsAny<Reservation>()));
+            _mapper.Setup(m => m.Map<Reservation>(It.IsAny<CreateReservationInputDTO>())).Returns(reservation);
+            _reservationService.CreateReservation(reservationDTO);
+
+            _reservationRepository.Verify(x => x.Insert(It.IsAny<Reservation>()), Times.Once());
+        }
+        [Test]
+        public void CreateReservation_CreateReservationInputDTO_ThowsValidationExceptionForUsingTodayDate()
+        {
+            CreateReservationInputDTO reservationDTO = new CreateReservationInputDTO()
+            {
+                StartDate = DateTime.Today,
+                EndDate = DateTime.Today.AddDays(2),
+                CustomerFullName = "Julian Slonim"
+            };
+
+            Reservation reservation = new Reservation()
+            {
+                StartDate = DateTime.Today.AddDays(1),
+                EndDate = DateTime.Today.AddDays(2),
+                CustomerFullName = "Julian Slonim"
+            };
+
+            _reservationRepository.Setup(m => m.Insert(It.IsAny<Reservation>()));
+            _mapper.Setup(m => m.Map<Reservation>(It.IsAny<CreateReservationInputDTO>())).Returns(reservation);
+
+            Assert.Throws<ValidationException>(() => _reservationService.CreateReservation(reservationDTO));
+        }
+        [Test]
+        public void CreateReservation_CreateReservationInputDTO_ThowsValidationExceptionForExtraDays()
+        {
+            CreateReservationInputDTO reservationDTO = new CreateReservationInputDTO()
+            {
+                StartDate = DateTime.Today.AddDays(1),
+                EndDate = DateTime.Today.AddDays(6),
+                CustomerFullName = "Julian Slonim"
+            };
+
+            Reservation reservation = new Reservation()
+            {
+                StartDate = DateTime.Today.AddDays(1),
+                EndDate = DateTime.Today.AddDays(2),
+                CustomerFullName = "Julian Slonim"
+            };
+
+            _reservationRepository.Setup(m => m.Insert(It.IsAny<Reservation>()));
+            _mapper.Setup(m => m.Map<Reservation>(It.IsAny<CreateReservationInputDTO>())).Returns(reservation);
+
+            Assert.Throws<ValidationException>(() => _reservationService.CreateReservation(reservationDTO));
+        }
+
+        [Test]
+        public void CreateReservation_CreateReservationInputDTO_ThowsValidationExceptionFor30DaysForward()
+        {
+            CreateReservationInputDTO reservationDTO = new CreateReservationInputDTO()
+            {
+                StartDate = DateTime.Today.AddDays(40),
+                EndDate = DateTime.Today.AddDays(41),
+                CustomerFullName = "Julian Slonim"
+            };
+
+            Reservation reservation = new Reservation()
+            {
+                StartDate = DateTime.Today.AddDays(1),
+                EndDate = DateTime.Today.AddDays(2),
+                CustomerFullName = "Julian Slonim"
+            };
+
+            _reservationRepository.Setup(m => m.Insert(It.IsAny<Reservation>()));
+            _mapper.Setup(m => m.Map<Reservation>(It.IsAny<CreateReservationInputDTO>())).Returns(reservation);
+
+            Assert.Throws<ValidationException>(() => _reservationService.CreateReservation(reservationDTO));
+        }
+        [Test]
+        public void UpdateReservation_UpdateReservationInputDTO_UpdatesReservation()
+        {
+            UpdateReservationInputDTO reservationDTO = new UpdateReservationInputDTO()
+            {
+                StartDate = DateTime.Today.AddDays(1),
+                EndDate = DateTime.Today.AddDays(2),
+                CustomerFullName = "Julian Slonim"
+            };
+
+            Reservation reservation = new Reservation()
+            {
+                StartDate = DateTime.Today.AddDays(1),
+                EndDate = DateTime.Today.AddDays(2),
+                CustomerFullName = "Julian Slonim"
+            };
+
+
+            _reservationRepository.Setup(m => m.GetById(It.IsAny<int>())).Returns(reservation);
+            _reservationRepository.Setup(m => m.Update(It.IsAny<Reservation>()));
+            _mapper.Setup(m => m.Map<Reservation>(It.IsAny<UpdateReservationInputDTO>())).Returns(reservation);
+            _reservationService.UpdateReservation(reservationDTO);
+
+            _reservationRepository.Verify(x => x.Update(It.IsAny<Reservation>()), Times.Once());
+        }
+        [Test]
+        public void UpdateReservation_UpdateReservationInputDTO_ThowsValidationExceptionForUsingTodayDate()
+        {
+            UpdateReservationInputDTO reservationDTO = new UpdateReservationInputDTO()
+            {
+                StartDate = DateTime.Today,
+                EndDate = DateTime.Today.AddDays(2),
+                CustomerFullName = "Julian Slonim"
+            };
+
+            Reservation reservation = new Reservation()
+            {
+                StartDate = DateTime.Today.AddDays(1),
+                EndDate = DateTime.Today.AddDays(2),
+                CustomerFullName = "Julian Slonim"
+            };
+
+            _reservationRepository.Setup(m => m.Insert(It.IsAny<Reservation>()));
+            _mapper.Setup(m => m.Map<Reservation>(It.IsAny<UpdateReservationInputDTO>())).Returns(reservation);
+
+            Assert.Throws<ValidationException>(() => _reservationService.UpdateReservation(reservationDTO));
+        }
+        [Test]
+        public void UpdateReservation_UpdateReservationInputDTO_ThowsValidationExceptionForExtraDays()
+        {
+            UpdateReservationInputDTO reservationDTO = new UpdateReservationInputDTO()
+            {
+                StartDate = DateTime.Today.AddDays(1),
+                EndDate = DateTime.Today.AddDays(6),
+                CustomerFullName = "Julian Slonim"
+            };
+
+            Reservation reservation = new Reservation()
+            {
+                StartDate = DateTime.Today.AddDays(1),
+                EndDate = DateTime.Today.AddDays(2),
+                CustomerFullName = "Julian Slonim"
+            };
+
+            _reservationRepository.Setup(m => m.Insert(It.IsAny<Reservation>()));
+            _mapper.Setup(m => m.Map<Reservation>(It.IsAny<UpdateReservationInputDTO>())).Returns(reservation);
+
+            Assert.Throws<ValidationException>(() => _reservationService.UpdateReservation(reservationDTO));
+        }
+
+        [Test]
+        public void UpdateReservation_UpdateReservationInputDTO_ThowsValidationExceptionFor30DaysForward()
+        {
+            UpdateReservationInputDTO reservationDTO = new UpdateReservationInputDTO()
+            {
+                StartDate = DateTime.Today.AddDays(40),
+                EndDate = DateTime.Today.AddDays(41),
+                CustomerFullName = "Julian Slonim"
+            };
+
+            Reservation reservation = new Reservation()
+            {
+                StartDate = DateTime.Today.AddDays(1),
+                EndDate = DateTime.Today.AddDays(2),
+                CustomerFullName = "Julian Slonim"
+            };
+
+            _reservationRepository.Setup(m => m.Insert(It.IsAny<Reservation>()));
+            _mapper.Setup(m => m.Map<Reservation>(It.IsAny<UpdateReservationInputDTO>())).Returns(reservation);
+
+            Assert.Throws<ValidationException>(() => _reservationService.UpdateReservation(reservationDTO));
+        }
+
     }
 }
