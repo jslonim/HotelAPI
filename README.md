@@ -41,6 +41,8 @@ Deletes a reservation
 
 This project is built with an N-Layer architechture including a business layer and a data layer, also includes a test project which contains tests for the service class in the business layer
 
+![image](https://user-images.githubusercontent.com/3581335/138752361-2181bf6c-7e2c-4652-8e1a-a7da89a21ab6.png)
+
 Includes Swagger for the documentation
 
 ![image](https://user-images.githubusercontent.com/3581335/138750555-4e1318e2-0530-49b3-b89a-1f74c1cdf330.png)
@@ -55,6 +57,10 @@ The Database only has 1 table which is for reservation with the following column
 - CustomerName : Name of the person who made the reservation
 
 ![image](https://user-images.githubusercontent.com/3581335/138750764-e73764c9-fd8d-483a-acec-7d1c57757f89.png)
+
+## Important
+
+StartDate and EndDate will take the time as inputs with the date but all the validation will use only the date, making the reservation valid from 0:00:00 to 23:59:59 as requested, otherwise to change this we could use a validation to accept only those times or use a tring with a specific format for the date that would be needed to be parsed later on.
 
 ## Tech stack
 
