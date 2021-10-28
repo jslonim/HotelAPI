@@ -13,7 +13,9 @@ API for hotel room management as test for Alten
 
 ## Requirements
  - Visual Studio 
- 
+
+ - .NET Core 3.1
+
  - SQL Server with a local DB
  
 ## Setup
