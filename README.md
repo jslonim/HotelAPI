@@ -62,6 +62,11 @@ The Database only has 1 table which is for reservation with the following column
 
 StartDate and EndDate will take the time as inputs with the date but all the validation will use only the date, making the reservation valid from 0:00:00 to 23:59:59 as requested, otherwise to change this we could use a validation to accept only those times or use a string with a specific format for the date that would be needed to be parsed later on.
 
+## Improvements
+- Add Customer table and relate to reservation's table
+- Add Room table and relate to reservation's table
+- Authentication
+
 ## Tech stack
 
 - Net core 3.1
