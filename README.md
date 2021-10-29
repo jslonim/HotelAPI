@@ -19,7 +19,7 @@ API for hotel room management as test for Alten
  - SQL Server with a local DB
  
 ## Setup
-The only change required is to change the connection string in appsettings.json to your local database (if it's not called localhost)
+The only change required is to change the connection string in appsettings.json to your local database (if it's not called localhost already)
 
 ![image](https://user-images.githubusercontent.com/3581335/138747338-937fef93-96af-4bf9-83e9-37827978bda6.png)
 
